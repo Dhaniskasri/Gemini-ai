@@ -3,64 +3,53 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, Star, Trophy, Target, Zap, Brain, Rocket } from "lucide-react";
+import { useState } from "react";
 
 const tasks = [
   {
     id: 1,
-    title: "Complete AI Fundamentals Course",
-    description: "Learn the basics of artificial intelligence and machine learning concepts.",
-    difficulty: "Beginner",
-    points: 50,
-    status: "completed",
+    title: "About your personality",
+    description: "five short simple,multiple choice question about your personality.",
+    status: "in-progress",
     icon: Brain,
-    category: "Learning"
+    category: "personality"
   },
   {
     id: 2,
-    title: "Build Your First ML Model",
-    description: "Create and train a simple machine learning model using Python and scikit-learn.",
-    difficulty: "Intermediate",
-    points: 100,
+    title: "Suggest a small Plan.",
+    description: "Suggest a simple menu,a music playlist theme,and one fun game we can play.",
     status: "in-progress",
     icon: Target,
-    category: "Project"
+    category: "Plan"
   },
   {
     id: 3,
-    title: "Write AI Ethics Essay",
-    description: "Research and write about ethical considerations in AI development and deployment.",
-    difficulty: "Intermediate",
-    points: 75,
+    title: "Pick a popular historical movies.",
+    description: "pick a popular historical movies and point out three major inaccuracies in a fun,myth,busting way.",
     status: "pending",
     icon: Star,
-    category: "Research"
+    category: "Movies"
   },
   {
     id: 4,
-    title: "Participate in Hackathon",
-    description: "Join an AI-focused hackathon and build an innovative solution.",
-    difficulty: "Advanced",
-    points: 150,
+    title: "Suggest a location for my weekend trip.",
+    description: "suggest a location were i can go with my friends for a weekend get away.",
     status: "pending",
     icon: Trophy,
-    category: "Competition"
+    category: "Trip"
   },
   {
     id: 5,
-    title: "Create Tutorial Video",
-    description: "Produce an educational video explaining a complex AI concept in simple terms.",
-    difficulty: "Intermediate",
-    points: 80,
+    title: "Suggest a 5 creative ideas to decorate my home.",
+    description: "The festive season is here,Suggest a 5 creative ideas to decorate my home.",
     status: "pending",
     icon: Zap,
-    category: "Content"
+    category: "Creative idea"
   },
   {
     id: 6,
     title: "Deploy AI Application",
     description: "Deploy your machine learning model as a web application using cloud services.",
-    difficulty: "Advanced",
-    points: 120,
     status: "pending",
     icon: Rocket,
     category: "Development"
@@ -69,8 +58,6 @@ const tasks = [
     id: 7,
     title: "Mentor Junior Students",
     description: "Guide and mentor 3 junior students in their AI learning journey.",
-    difficulty: "Advanced",
-    points: 100,
     status: "pending",
     icon: Star,
     category: "Mentorship"
@@ -79,26 +66,13 @@ const tasks = [
     id: 8,
     title: "Research Paper Review",
     description: "Read and summarize 5 recent AI research papers and present findings.",
-    difficulty: "Advanced",
-    points: 90,
     status: "pending",
     icon: Brain,
     category: "Research"
   }
 ];
 
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "Beginner":
-      return "bg-green-100 text-green-800 border-green-200";
-    case "Intermediate":
-      return "bg-yellow-100 text-yellow-800 border-yellow-200";
-    case "Advanced":
-      return "bg-red-100 text-red-800 border-red-200";
-    default:
-      return "bg-gray-100 text-gray-800 border-gray-200";
-  }
-};
+ 
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -125,8 +99,25 @@ const getStatusIcon = (status: string) => {
 };
 
 const Tasks = () => {
-  const completedTasks = tasks.filter(task => task.status === "completed").length;
-  const totalPoints = tasks.reduce((sum, task) => task.status === "completed" ? sum + task.points : sum, 0);
+  const [task1Completed, setTask1Completed] = useState(false);
+  const [task2Completed, setTask2Completed] = useState(false);
+  const [task3Completed, setTask3Completed] = useState(false);
+  const [task4Completed, setTask4Completed] = useState(false);
+  const [task5Completed, setTask5Completed] = useState(false);
+  const [task6Completed, setTask6Completed] = useState(false);
+  const [task7Completed, setTask7Completed] = useState(false);
+  const [task8Completed, setTask8Completed] = useState(false);
+  const completedTasks =
+    tasks.filter(task => task.status === "completed").length +
+    (task1Completed ? 1 : 0) +
+    (task2Completed ? 1 : 0) +
+    (task3Completed ? 1 : 0) +
+    (task4Completed ? 1 : 0) +
+    (task5Completed ? 1 : 0) +
+    (task6Completed ? 1 : 0) +
+    (task7Completed ? 1 : 0) +
+    (task8Completed ? 1 : 0);
+  
 
   return (
     <div className="min-h-screen bg-background">
@@ -146,10 +137,6 @@ const Tasks = () => {
               <div className="text-center">
                 <div className="text-3xl font-bold text-primary">{completedTasks}/8</div>
                 <div className="text-sm text-muted-foreground">Tasks Completed</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">{totalPoints}</div>
-                <div className="text-sm text-muted-foreground">Points Earned</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-primary">{Math.round((completedTasks / 8) * 100)}%</div>
@@ -172,19 +159,48 @@ const Tasks = () => {
                         </div>
                         <div>
                           <CardTitle className="text-lg">{task.title}</CardTitle>
-                          <div className="flex items-center gap-2 mt-1">
-                            <Badge variant="outline" className={getDifficultyColor(task.difficulty)}>
-                              {task.difficulty}
-                            </Badge>
-                            <Badge variant="outline">
-                              {task.points} pts
-                            </Badge>
-                          </div>
+                          
                         </div>
                       </div>
-                      <Badge variant="outline" className={`${getStatusColor(task.status)} flex items-center gap-1`}>
-                        {getStatusIcon(task.status)}
-                        {task.status === "in-progress" ? "In Progress" : task.status === "completed" ? "Completed" : "Pending"}
+                      <Badge variant="outline" className={`${getStatusColor(
+                        task.id === 1 ? (task1Completed ? "completed" : task.status)
+                        : task.id === 2 ? (task2Completed ? "completed" : task.status)
+                        : task.id === 3 ? (task3Completed ? "completed" : task.status)
+                        : task.id === 4 ? (task4Completed ? "completed" : task.status)
+                        : task.id === 5 ? (task5Completed ? "completed" : task.status)
+                        : task.id === 6 ? (task6Completed ? "completed" : task.status)
+                        : task.id === 7 ? (task7Completed ? "completed" : task.status)
+                        : task.id === 8 ? (task8Completed ? "completed" : task.status)
+                        : task.status
+                      )} flex items-center gap-1`}>
+                        {getStatusIcon(
+                          task.id === 1 ? (task1Completed ? "completed" : task.status)
+                          : task.id === 2 ? (task2Completed ? "completed" : task.status)
+                          : task.id === 3 ? (task3Completed ? "completed" : task.status)
+                          : task.id === 4 ? (task4Completed ? "completed" : task.status)
+                          : task.id === 5 ? (task5Completed ? "completed" : task.status)
+                          : task.id === 6 ? (task6Completed ? "completed" : task.status)
+                          : task.id === 7 ? (task7Completed ? "completed" : task.status)
+                          : task.id === 8 ? (task8Completed ? "completed" : task.status)
+                          : task.status
+                        )}
+                        {task.id === 1
+                          ? (task1Completed ? "Completed" : (task.status === "in-progress" ? "In Progress" : "Pending"))
+                          : task.id === 2
+                            ? (task2Completed ? "Completed" : "In Progress")
+                          : task.id === 3
+                            ? (task3Completed ? "Completed" : (task.status === "in-progress" ? "In Progress" : "Pending"))
+                            : task.id === 4
+                              ? (task4Completed ? "Completed" : (task.status === "in-progress" ? "In Progress" : "Pending"))
+                              : task.id === 5
+                                ? (task5Completed ? "Completed" : (task.status === "in-progress" ? "In Progress" : "Pending"))
+                                : task.id === 6
+                                  ? (task6Completed ? "Completed" : (task.status === "in-progress" ? "In Progress" : "Pending"))
+                                  : task.id === 7
+                                    ? (task7Completed ? "Completed" : (task.status === "in-progress" ? "In Progress" : "Pending"))
+                                    : task.id === 8
+                                      ? (task8Completed ? "Completed" : (task.status === "in-progress" ? "In Progress" : "Pending"))
+                                : (task.status === "in-progress" ? "In Progress" : task.status === "completed" ? "Completed" : "Pending")}
                       </Badge>
                     </div>
                   </CardHeader>
@@ -196,13 +212,255 @@ const Tasks = () => {
                       <Badge variant="secondary">
                         {task.category}
                       </Badge>
-                      <Button 
-                        variant={task.status === "completed" ? "secondary" : "gradient"} 
-                        size="sm"
-                        disabled={task.status === "completed"}
-                      >
-                        {task.status === "completed" ? "Completed" : task.status === "in-progress" ? "Continue" : "Start Task"}
-                      </Button>
+                      {task.id === 1 ? (
+                        task1Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=2988&promptId=17" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask1Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 2 ? (
+                        task2Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=2988&promptId=16" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask2Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 3 ? (
+                        task3Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=2988&promptId=15" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask3Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 3 ? (
+                        task3Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=2988&promptId=15" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask3Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 4 ? (
+                        task4Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=2988&promptId=14" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask4Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 4 ? (
+                        task4Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=2988&promptId=14" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask4Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 5 ? (
+                        task5Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=2988&promptId=13" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask5Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 6 ? (
+                        task6Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=3916&promptId=16" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask6Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 7 ? (
+                        task7Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=3916&promptId=15" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask7Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : task.id === 8 ? (
+                        task8Completed ? (
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            disabled
+                          >
+                            Completed
+                          </Button>
+                        ) : (
+                          <a 
+                            href="https://aiskillshouse.com/student/qr-mediator.html?uid=3916&promptId=14" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={() => setTask8Completed(true)}
+                          >
+                            <Button 
+                              variant="gradient" 
+                              size="sm"
+                            >
+                              Start Task
+                            </Button>
+                          </a>
+                        )
+                      ) : (
+                        <Button 
+                          variant={task.status === "completed" ? "secondary" : "gradient"} 
+                          size="sm"
+                          disabled={task.status === "completed"}
+                        >
+                          {task.status === "completed" ? "Completed" : task.status === "in-progress" ? "Continue" : "Start Task"}
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -221,7 +479,7 @@ const Tasks = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Complete {8 - completedTasks} more tasks to earn the "AI Pioneer" badge!
+                  Complete 8 task to get a  lap stickers!
                 </p>
                 <div className="w-full bg-muted rounded-full h-2">
                   <div 
