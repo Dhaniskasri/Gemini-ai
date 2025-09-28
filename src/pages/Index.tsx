@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Zap, Globe, Rocket, Star, ArrowRight, Brain, Target, Users } from "lucide-react";
 import heroImage from "@/assets/hero-bg.jpg";
-import ambassadorProfile from "@/assets/ambassador-profile.jpg";
 import aiIllustration from "@/assets/ai-illustration.jpg";
 
 const Index = () => {
@@ -42,9 +41,15 @@ const Index = () => {
                   Learn More
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
-                <Button variant="outline" size="lg" className="hover:bg-primary/10 hover:border-primary">
-                  View Tasks
-                </Button>
+                <a 
+                  href="https://gemini.google.com/app?hl=en-IN" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="outline" size="lg" className="hover:bg-primary/10 hover:border-primary">
+                    Try AI assistant
+                  </Button>
+                </a>
               </div>
             </div>
             <div className="relative">
@@ -122,7 +127,7 @@ const Index = () => {
       </section>
 
       {/* Ambassador Section */}
-      <section className="py-16">
+      <section id="ambassador" className="py-16">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 hero-text">Meet Our Ambassador</h2>
@@ -136,7 +141,7 @@ const Index = () => {
               <CardHeader className="text-center">
                 <div className="relative w-32 h-32 mx-auto mb-4">
                   <img 
-                    src={ambassadorProfile} 
+                    src="/my-profile.jpg" 
                     alt="Ambassador Profile" 
                     className="w-full h-full rounded-full object-cover border-4 border-primary/20"
                   />
@@ -151,7 +156,7 @@ const Index = () => {
                 <div className="flex justify-center gap-2 mt-3">
                   <Badge variant="secondary" className="bg-primary/10 text-primary">
                     <Brain className="w-3 h-3 mr-1" />
-                    AI Expert
+                    AI learner
                   </Badge>
                   <Badge variant="secondary" className="bg-success/10 text-success">
                     <Users className="w-3 h-3 mr-1" />
@@ -183,18 +188,13 @@ const Index = () => {
             <CardHeader>
               <CardTitle className="text-2xl hero-text">Ready to Join the AI Revolution?</CardTitle>
               <CardDescription className="text-lg">
-                Connect with us and be part of the future of artificial intelligence
+                Be part of the future of artificial intelligence
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex gap-4 justify-center">
-                <Link to="/contact">
-                  <Button size="lg" variant="gradient">
-                    Get In Touch
-                  </Button>
-                </Link>
                 <Link to="/tasks">
-                  <Button variant="outline" size="lg" className="hover:bg-primary/10 hover:border-primary">
+                  <Button size="lg" variant="gradient">
                     Explore Tasks
                   </Button>
                 </Link>
